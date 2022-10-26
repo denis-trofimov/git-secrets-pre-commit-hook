@@ -1,6 +1,19 @@
-- id: git-secrets
+- id: git-secrets-scan
   name: "git-secrets: scan new files"
   description: Prevents you from committing secrets and credentials into git repositories
   language: docker_image
   entry: ghcr.io/denis-trofimov/git-secrets-docker git secrets --scan 
   stages: [commit]
+- id: git-secrets-scan-history
+  name: "git-secrets: scans repository including all revisions"
+  description: |
+    Scans repository including all revisions. When a file contains a secret, 
+    the matched text from the file being scanned will be written to stdout and 
+    the script will exit with a non-zero status. 
+    Each matched line will be written with the name of the file that matched, 
+    a colon, the line number that matched, a colon, and then the line of text that matched.
+  language: docker_image
+  entry: ghcr.io/denis-trofimov/git-secrets-docker git secrets --scan-history
+  always_run: true
+  pass_filenames: false
+  stages: [manual]

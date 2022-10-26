@@ -1,5 +1,4 @@
-git-secrets-pre-commit
-======================
+# git-secrets-pre-commit
 
 A set of pre-commit hook definitions for [git-secrets](https://github.com/awslabs/git-secrets).
 
@@ -7,7 +6,7 @@ A set of pre-commit hook definitions for [git-secrets](https://github.com/awslab
 
 These hooks use Docker to run pre-commit, so it's not necessary to install it manually in the host.
 
-### Usage
+## Usage
 
 Add this to your `.pre-commit-config.yaml`
 
@@ -16,17 +15,19 @@ repos:
   - repo: https://github.com/denis-trofimov/git-secrets-pre-commit
     hooks:
       - id: git-secrets-scan
+      - id: git-secrets-commit-msg
+      - id: git-secrets-merge-check
 ```
 
 and install:
 
-```
-pre-commit install -t pre-commit -t commit-msg -t prepare-commit-msg
+```sh
+pre-commit install
 ```
 
 ## Available hooks
 
-### git-secrets-scan
+### git-secrets
 
 Scans all files that are about to be committed.
 
@@ -38,6 +39,11 @@ Checks the commit message for secrets.
 
 Determines if merging in a commit will introduce tainted history
 
-## Scanning all history
 
-These hooks do not scan the repository history. For that, refer to the [git-secrets docs](https://github.com/awslabs/git-secrets).
+## Scan all files
+
+`pre-commit run --verbose --all-files git-secrets`
+
+## Scans repository including all revisions
+
+`pre-commit try-repo /home/denis/huma/git-secrets-pre-commit git-secrets-scan-history --verbose --hook-stage manual`
