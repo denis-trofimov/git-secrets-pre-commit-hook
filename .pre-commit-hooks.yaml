@@ -1,0 +1,6 @@
+- id: git-secrets
+  name: "Git Secrets: scan files"
+  description: Scans all files that are about to be committed
+  language: docker_image
+  entry: izhar0407/git-secrets:latest git secrets --scan 
+  stages: [commit]
