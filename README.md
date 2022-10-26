@@ -8,42 +8,41 @@ These hooks use Docker to run pre-commit, so it's not necessary to install it ma
 
 ## Usage
 
+### Scan all files
+
+`pre-commit try-repo https://github.com/denis-trofimov/git-secrets-pre-commit-hook git-secrets-scan --verbose --all-files`
+
+### Scans repository including all revisions
+
+`pre-commit try-repo https://github.com/denis-trofimov/git-secrets-pre-commit-hook git-secrets-scan-history --verbose --hook-stage manual`
+
+### Install
+
 Add this to your `.pre-commit-config.yaml`
 
 ```yaml
 repos:
-  - repo: https://github.com/denis-trofimov/git-secrets-pre-commit
+  - repo: https://github.com/denis-trofimov/git-secrets-pre-commit-hook
     hooks:
       - id: git-secrets-scan
-      - id: git-secrets-commit-msg
-      - id: git-secrets-merge-check
 ```
 
-and install:
+and install `pre-commit install`
 
-```sh
-pre-commit install
-```
+### Available hooks
 
-## Available hooks
-
-### git-secrets
+#### git-secrets-scan
 
 Scans all files that are about to be committed.
 
-### git-secrets-commit-msg
+#### git-secrets-scan-history
 
-Checks the commit message for secrets.
+Scans repository including all revisions. When a file contains a secret,
+the matched text from the file being scanned will be written to stdout and
+the script will exit with a non-zero status.
+Each matched line will be written with the name of the file that matched,
+a colon, the line number that matched, a colon, and then the line of text that matched.
 
-### git-secrets-merge-check
+You can trigger it only manually:
 
-Determines if merging in a commit will introduce tainted history
-
-
-## Scan all files
-
-`pre-commit run --verbose --all-files git-secrets`
-
-## Scans repository including all revisions
-
-`pre-commit try-repo /home/denis/huma/git-secrets-pre-commit git-secrets-scan-history --verbose --hook-stage manual`
+`pre-commit try-repo https://github.com/denis-trofimov/git-secrets-pre-commit-hook git-secrets-scan-history --verbose --hook-stage manual`
