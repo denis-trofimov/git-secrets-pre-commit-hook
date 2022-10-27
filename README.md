@@ -10,11 +10,42 @@ These hooks use Docker to run pre-commit, so it's not necessary to install it ma
 
 ### Scan all files
 
-`pre-commit try-repo https://github.com/denis-trofimov/git-secrets-pre-commit-hook git-secrets-scan --verbose --all-files`
+```sh
+$ pre-commit try-repo https://github.com/denis-trofimov/git-secrets-pre-commit-hook --verbose
+[INFO] Initializing environment for https://github.com/denis-trofimov/git-secrets-pre-commit-hook.
+===============================================================================
+Using config:
+===============================================================================
+repos:
+-   repo: https://github.com/denis-trofimov/git-secrets-pre-commit-hook
+    rev: 966ff29df84278142baae49a9f7516ee6827c2ef
+    hooks:
+    -   id: git-secrets-scan
+    -   id: git-secrets-scan-history
+===============================================================================
+git-secrets: scan new files..............................................Passed
+- hook id: git-secrets-scan
+- duration: 0.99s
+```
 
 ### Scans repository including all revisions
 
-`pre-commit try-repo https://github.com/denis-trofimov/git-secrets-pre-commit-hook git-secrets-scan-history --verbose --hook-stage manual`
+```sh
+$ pre-commit try-repo https://github.com/denis-trofimov/git-secrets-pre-commit-hook git-secrets-scan-history --verbose --hook-stage manual
+===============================================================================
+Using config:
+===============================================================================
+repos:
+-   repo: https://github.com/denis-trofimov/git-secrets-pre-commit-hook
+    rev: 966ff29df84278142baae49a9f7516ee6827c2ef
+    hooks:
+    -   id: git-secrets-scan-history
+===============================================================================
+[INFO] Initializing environment for https://github.com/denis-trofimov/git-secrets-pre-commit-hook.
+git-secrets: scans repository including all revisions.......................Passed
+- hook id: git-secrets-scan-history
+- duration: 1.16s
+```
 
 ### Install
 
